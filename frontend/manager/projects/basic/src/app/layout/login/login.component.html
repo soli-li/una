@@ -1,0 +1,85 @@
+<div class="componentTopDiv" style="display: flex; justify-content: center; align-items: center">
+  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="请输入用户名!" i18n-nzErrorTip="'用户名'错误提示">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="userName" placeholder="用户名" i18n-placeholder="'用户名输入框提示'" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control nzErrorTip="请输入密码!" i18n-nzErrorTip="'密码'错误提示">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" autocomplete="on" placeholder="密码"
+            i18n-placeholder="'密码输入框提示'" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="login-form-margin">
+      <div nz-col [nzSpan]="12" style="margin: auto 0;">
+        <label nz-checkbox formControlName="remember" [nzDisabled]="elementDisabled">
+          <span i18n="'记住我'">记住我</span>
+        </label>
+      </div>
+      <div nz-col [nzSpan]="12" style="margin: auto 0;">
+        <a nz-button nzType="link" [disabled]="elementDisabled" style="padding-right: 0px;" class="login-form-forgot"
+          [disabled]="true" i18n="'忘记密码'">忘记密码</a>
+      </div>
+    </div>
+    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" i18n="'登录'"
+      [disabled]="elementDisabled">登录</button>
+  </form>
+
+  <nz-modal [(nzVisible)]="errorModalVisible" [nzTitle]="" [nzCancelText]="null" (nzOnOk)="errorModalVisible = false"
+    [nzMaskClosable]="false" nzClosable="false" nzOkText="确定" i18n-nzOkText="错误提示框'确定'按钮">
+    <ng-container *nzModalContent>
+      <p *ngIf="errorCode ==='L00100' || errorCode === ''" i18n="登录异常提示 默认项">登录异常</p>
+      <p *ngIf="errorCode ==='L00101'" i18n="登录异常提示 L00101">不支持该验证方式</p>
+      <p *ngIf="errorCode ==='L00102'" i18n="登录异常提示 L00102">请填写必填项</p>
+      <p *ngIf="errorCode ==='L00103'" i18n="登录异常提示 L00103">找不到该用户</p>
+      <p *ngIf="errorCode ==='L00104'" i18n="登录异常提示 L00104">密码不正确</p>
+      <p *ngIf="errorCode ==='L00105'" i18n="登录异常提示 L00105">用户状态不可用</p>
+      <p *ngIf="errorCode ==='L00107'" i18n="登录异常提示 L00107">账号已锁定</p>
+      <p *ngIf="errorCode ==='L00108'" i18n="登录异常提示 L00108">已达登陆上限</p>
+    </ng-container>
+  </nz-modal>
+</div>
+
+<nz-modal [nzWidth]="changePasswordWidth" [(nzVisible)]="changePasswordVisible" [nzClosable]="false"
+  (nzOnCancel)="changePasswordCancel()" (nzOnOk)="changePasswordOk()">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="formGroup">
+      <div nz-row>
+        <div nz-col [nzXs]="24">
+          <nz-form-item [nzGutter]="12">
+            <nz-form-label [nzXs]="10" [nzFor]="'newPassword'">新密码</nz-form-label>
+            <nz-form-control [nzXs]="14" [nzErrorTip]="combineTpl">
+              <input [type]="'password'" nz-input placeholder="" [formControlName]="'newPassword'"
+                [attr.id]="'newPassword'" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzXs]="24">
+          <nz-form-item [nzGutter]="12">
+            <nz-form-label [nzXs]="10" [nzFor]="'againNewPassword'">确认新密码</nz-form-label>
+            <nz-form-control [nzXs]="14" [nzErrorTip]="combineTpl">
+              <input [type]="'password'" nz-input placeholder="" [formControlName]="'againNewPassword'"
+                [attr.id]="'againNewPassword'" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+    <ng-container *ngIf="showErrorMsg">
+      <div *ngFor="let error of errorMsg" style="color: red; width: 100%; padding-left: 20px;">
+        {{error}}
+      </div>
+    </ng-container>
+  </ng-container>
+</nz-modal>
+
+<ng-template #combineTpl let-control>
+  <ng-container *ngIf="control.hasError('notMatch')">密码不相同</ng-container>
+  <ng-container *ngIf="control.hasError('required')">不能为空</ng-container>
+</ng-template>

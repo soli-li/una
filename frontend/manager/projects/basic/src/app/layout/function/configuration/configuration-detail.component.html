@@ -1,0 +1,99 @@
+<div class="detail">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row *ngIf="mode === 'add-manager'">
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="3" [nzFor]="'companyId'">公司</nz-form-label>
+          <nz-form-control [nzXs]="9">
+            <nz-select [formControlName]="'companyId'" [attr.id]="'companyId'" (ngModelChange)="changeCompany()">
+              <nz-option *ngFor="let company of companies" [nzValue]="company.id" [nzLabel]="company.name">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'name'">名字</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <input nz-input placeholder="" [formControlName]="'name'" [attr.id]="'name'" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'status'">状态</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <nz-select [formControlName]="'status'" [attr.id]="'status'">
+              <nz-option *ngFor="let map of edMap | keyvalue" [nzValue]="map.key" [nzLabel]="map.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row style="height: 80px;">
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'confKey'">键配置</nz-form-label>
+          <nz-form-control [nzXs]="18" [nzErrorTip]="combineTpl">
+            <input nz-input placeholder="" [formControlName]="'confKey'" [attr.id]="'confKey'" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'valueType'">值类型</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <nz-select [formControlName]="'valueType'" [attr.id]="'valueType'"
+              (ngModelChange)="changeValueType($event)">
+              <nz-option *ngFor="let map of valueTypeMap | keyvalue" [nzValue]="map.key" [nzLabel]="map.value">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="3" [nzFor]="'confValue'">值配置</nz-form-label>
+          <nz-form-control [nzXs]="21">
+            <nz-date-picker [ngModel]="" [attr.id]="'confValue'" *ngIf="valueTypeControl === 'date'" nzMode="date"
+              nzFormat="yyyy-MM-dd">
+            </nz-date-picker>
+            <nz-date-picker [formControlName]="'confValue'" [attr.id]="'confValue'"
+              *ngIf="valueTypeControl === 'datetime'" nzMode="date" nzFormat="yyyy-MM-dd HH:mm:ss" [nzShowTime]="true">
+            </nz-date-picker>
+            <nz-switch [formControlName]="'confValue'" [attr.id]="'confValue'" *ngIf="valueTypeControl === 'boolean'">
+            </nz-switch>
+            <nz-input-number [formControlName]="'confValue'" [attr.id]="'confValue'"
+              *ngIf="valueTypeControl === 'number'"></nz-input-number>
+            <textarea nz-input rows="4" placeholder="" [formControlName]="'confValue'" [attr.id]="'confValue'"
+              *ngIf="valueTypeControl === 'string'"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="3" [nzFor]="'remark'">备注</nz-form-label>
+          <nz-form-control [nzXs]="21">
+            <textarea rows="4" nz-input [formControlName]="'remark'" [attr.id]="'remark'"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #combineTpl let-control>
+  <ng-container *ngIf="control.hasError('exist')">该键已经存在</ng-container>
+  <ng-container *ngIf="control.hasError('required')">请输入键!</ng-container>
+</ng-template>

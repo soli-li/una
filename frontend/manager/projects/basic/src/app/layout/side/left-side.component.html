@@ -1,0 +1,95 @@
+<div style="height: 100%;">
+  <div class="user-info">
+    <div (click)="operDetail()" [ngClass]="{ 'avatar-mini' : collapsed ,  'avatar' : !collapsed }">
+      <img [src]="avatar" *ngIf="avatar !== undefined" />
+      <i nz-icon nzType="user" nzTheme="outline" *ngIf="avatar === undefined"></i>
+    </div>
+    <div *ngIf="!collapsed" class="real" (click)="operDetail()">{{name}}</div>
+  </div>
+  <div [ngClass]="{ 'menu-mini' : collapsed , 'menu' : !collapsed }">
+    <ul nz-menu nzMode="inline" nzTheme="dark" [nzInlineCollapsed]="collapsed">
+      <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+      <ng-template #menuTpl let-menus>
+        <ng-container *ngFor="let menu of menus">
+          <li *ngIf="!menu.childrenMenuSet" nz-menu-item [nzPaddingLeft]="menu.level * 36" [nzMatchRouter]="true">
+            <i nz-icon [nzType]="utils.splitIconName(menu.icon).type" [nzTheme]="utils.splitIconName(menu.icon).theme"
+              *ngIf="menu.icon"></i>
+            <span><a [routerLink]="'.' + menu.frontEndUri" [queryParams]="menu.param">{{ menu.name }}</a></span>
+          </li>
+          <li *ngIf="menu.childrenMenuSet" nz-submenu [nzPaddingLeft]="menu.level * 0" [nzTitle]="menu.name"
+            [nzIcon]="utils.splitIconName(menu.icon).type" [nzOpen]="menu.selected">
+            <ul>
+              <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.childrenMenuSet }"></ng-container>
+            </ul>
+          </li>
+        </ng-container>
+      </ng-template>
+    </ul>
+  </div>
+</div>
+
+<nz-modal [nzWidth]="detailWidth" [(nzVisible)]="detailVisible" [nzTitle]="detailTitle" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <app-una-user-detail #detailModal [user]="currentUser" [mode]="detailMode"></app-una-user-detail>
+  </ng-container>
+</nz-modal>
+
+<ng-template #detailTitle>
+  用户详情&nbsp;<button nz-button [nzType]="'primary'" [nzSize]="'small'" (click)="logout()">登出</button>&nbsp;<button
+    nz-button [nzType]="'primary'" [nzSize]="'small'" (click)="changePassword()">修改密码</button>&nbsp;
+  <nz-select *ngIf="currentUser !== undefined" [ngModel]="currentUser.currentGroupId" style="min-width: 100px;"
+    (ngModelChange)="changeGroup($event)">
+    <nz-option [nzValue]="''" [nzLabel]="''"></nz-option>
+    <nz-option *ngFor="let group of currentUser?.groupSet || []" [nzValue]="group.id" [nzLabel]="group.name">
+    </nz-option>
+  </nz-select>
+
+</ng-template>
+
+<nz-modal [nzWidth]="changePasswordWidth" [(nzVisible)]="changePasswordVisible" [nzClosable]="false"
+  (nzOnCancel)="changePasswordCancel()" (nzOnOk)="changePasswordOk()">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="formGroup">
+      <div nz-row>
+        <div nz-col [nzXs]="24">
+          <nz-form-item [nzGutter]="12">
+            <nz-form-label [nzXs]="10" [nzFor]="'currPassword'">当前密码</nz-form-label>
+            <nz-form-control [nzXs]="14" [nzErrorTip]="combineTpl">
+              <input [type]="'password'" nz-input placeholder="" [formControlName]="'currPassword'"
+                [attr.id]="'currPassword'" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzXs]="24">
+          <nz-form-item [nzGutter]="12">
+            <nz-form-label [nzXs]="10" [nzFor]="'newPassword'">新密码</nz-form-label>
+            <nz-form-control [nzXs]="14" [nzErrorTip]="combineTpl">
+              <input [type]="'password'" nz-input placeholder="" [formControlName]="'newPassword'"
+                [attr.id]="'newPassword'" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzXs]="24">
+          <nz-form-item [nzGutter]="12">
+            <nz-form-label [nzXs]="10" [nzFor]="'againNewPassword'">确认新密码</nz-form-label>
+            <nz-form-control [nzXs]="14" [nzErrorTip]="combineTpl">
+              <input [type]="'password'" nz-input placeholder="" [formControlName]="'againNewPassword'"
+                [attr.id]="'againNewPassword'" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+    <ng-container *ngIf="showErrorMsg">
+      <div *ngFor="let error of errorMsg" style="color: red; width: 100%; padding-left: 20px;">
+        {{error}}
+      </div>
+    </ng-container>
+  </ng-container>
+</nz-modal>
+
+<ng-template #combineTpl let-control>
+  <ng-container *ngIf="control.hasError('notMatch')">密码不相同</ng-container>
+  <ng-container *ngIf="control.hasError('required')">不能为空</ng-container>
+</ng-template>

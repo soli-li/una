@@ -1,0 +1,20 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+      #base-path: '/actuator'
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    active: ${spring.profiles.active}

@@ -1,0 +1,23 @@
+<div>
+  <nz-table #basicTable [nzData]="sessionInfos" class="search-result-list" [nzSize]="'small'" [nzShowPagination]="false"
+    [nzBordered]="true">
+    <thead>
+      <tr>
+        <th>登陆时间</th>
+        <th>设配类型</th>
+        <th>登陆IP</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{formatDate('yyyy-MM-dd HH:mm:ss',data.createdTime)}}</td>
+        <td>{{getDeviceTyep(data.userAgent)}}</td>
+        <td>{{data.ip}}</td>
+        <td>
+          <a (click)="takeOut(data)">踢出</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

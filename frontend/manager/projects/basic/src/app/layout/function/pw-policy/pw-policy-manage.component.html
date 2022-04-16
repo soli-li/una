@@ -1,0 +1,52 @@
+<div class="">
+  <nz-table #basicTable [nzData]="dataSet" class="search-result-list" [nzFrontPagination]="false" [nzSize]="'small'"
+    [nzLoading]="loading" [nzTitle]="tableTitle" [nzBordered]="true">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th>描述</th>
+        <th>包含字母</th>
+        <th>区分大小写</th>
+        <th>包含数字</th>
+        <th>包含符号</th>
+        <th>最小长度</th>
+        <th>有效期时长(天)</th>
+        <th>密码相同次数</th>
+        <th>试错次数</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.label}}</td>
+        <td>{{utils.ellipsisString(15, replaceAll(data.description))}}</td>
+        <td>{{data.letters ? "包含" : "不包含"}}</td>
+        <td>{{data.caseSensitive ? "区分" : "不区分"}}</td>
+        <td>{{data.digitals ? "包含" : "不包含"}}</td>
+        <td>{{data.nonAlphanumeric ? "包含" : "不包含"}}</td>
+        <td>{{data.length}}</td>
+        <td>{{data.maximumAge}}</td>
+        <td>{{data.repeatCount}}</td>
+        <td>{{data.triesCount}}</td>
+        <td>
+          <a (click)="openDetail(data)">详情</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal [nzWidth]="detailWidth" [(nzVisible)]="detailVisible" nzTitle="策略详情" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <app-una-pw-policy-detail #detailModal [passwordPolicy]="selectedPasswordPolicy" [mode]="detailMode">
+    </app-una-pw-policy-detail>
+  </ng-container>
+</nz-modal>
+
+<ng-template #tableTitle>
+  <div class="table-title" *ngIf="manager === true">
+    <div></div>
+    <div><button nz-button [nzType]="'primary'" (click)="add()">增加策略</button></div>
+  </div>
+</ng-template>

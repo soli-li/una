@@ -1,0 +1,46 @@
+{
+  "/login": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/logout": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/pwPolicy": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/company": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/user": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/group": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/role": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/perm": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/url": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/menu": {
+    "target": "http://localhost:12201",
+    "secure": false
+  },
+  "/conf": {
+    "target": "http://localhost:12201",
+    "secure": false
+  }
+}

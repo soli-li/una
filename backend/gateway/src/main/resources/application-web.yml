@@ -1,0 +1,49 @@
+server:
+  servlet-path: '/' # the servlet path, defaults to '/'
+  port: 18443
+  # ssl:
+  #   enable: true
+  #   key-store: classpath:keystore_RSA
+  #   key-store-password: una_key
+  #   key-store-type: PKCS12
+  #   key-alias: una
+  #   enabled-protocols: TLSv1.2
+  #   protocol: TLS
+
+spring:
+  # application:
+    # name: # Application name.
+    # address: # bind to a specific NIC
+    # session-timeout: # session timeout in seconds
+  mvc:
+    view:
+      prefix: /WEB-INF/views/ # Spring MVC view prefix.
+      suffix: .jsp # Spring MVC view suffix.
+    throw-exception-if-no-handler-found: true # Whether a "NoHandlerFoundException" should be thrown if no Handler was found to process a request.
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # Date format string or a fully-qualified date format class name. For instance, `yyyy-MM-dd HH:mm:ss`.
+    default-property-inclusion: non_null # Controls the inclusion of properties during serialization. Configured with one of the values in Jackson's JsonInclude.Include enumeration.
+    property-naming-strategy: com.fasterxml.jackson.databind.PropertyNamingStrategy # One of the constants on Jackson's PropertyNamingStrategy. Can also be a fully-qualified class name of a PropertyNamingStrategy subclass.
+    serialization:
+      write-dates-as-timestamps: false # Jackson on/off features that affect the way Java objects are serialized.
+      write-date-timestamps-as-nanoseconds: false
+      # indent_output: true
+      # WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: true
+    deserialization:
+      fail-on-unknown-properties: false # Jackson on/off features that affect the way Java objects are deserialized.
+    time-zone: GMT+8 # Time zone used when formatting dates. For instance, "America/Los_Angeles" or "GMT+10".
+  http:
+    log-request-details: true # Whether logging of (potentially sensitive) request details at DEBUG and TRACE level is allowed.
+    encoding: 
+      charset: ${app.encoding}
+      enabled: true # Enable http encoding support.
+      force: false # Force the encoding to the configured charset on HTTP requests and responses.
+  servlet:
+    multipart:
+      file-size-threshold: 1024MB # Threshold after which files are written to disk.
+      location: ${app.home}/intermediate # Intermediate location of uploaded files.
+      max-file-size: 10MB # Max file size.
+      max-request-size: 100MB # Max request size.
+  web: 
+    resources: 
+      add-mappings: false # Whether to enable default resource handling.

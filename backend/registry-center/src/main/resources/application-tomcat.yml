@@ -1,0 +1,18 @@
+server:
+  tomcat:
+    basedir: ${app.home}
+    uri-encoding: ${app.encoding}
+    # protocol-header: x-forwarded-proto
+    # remote-ip-header: x-forwarded-for
+    # max-threads: 0 # number of threads in protocol handler
+    # background-processor-delay: 30 # in seconds
+    accesslog:
+      buffered: true
+      directory: ${app.home}/logs/tomcat/
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern: common
+      prefix: access_log
+      suffix: .log
+      request-attributes-enabled: true
+      rotate: true

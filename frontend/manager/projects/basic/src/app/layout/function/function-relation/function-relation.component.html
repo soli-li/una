@@ -1,0 +1,70 @@
+<div class="relation">
+  <div nz-row [nzGutter]="48">
+    <div nz-col [nzSpan]="6">
+      <nz-card [nzTitle]="'用户列表'" [nzSize]="'small'" class="data-list">
+        <div *ngFor="let entry of userItemMap | keyvalue">
+          <label nz-checkbox [(ngModel)]="entry.value.checked" [nzDisabled]="mode === 'user'">
+            {{entry.value.entity.userProfile?.realName === null || entry.value.entity.userProfile?.realName === ''
+            ?
+            entry.value.entity.username : entry.value.entity.userProfile?.realName}}</label>
+        </div>
+        <div *ngFor="let entry of userItemMap | keyvalue">
+          <label nz-checkbox [nzDisabled]="true" *ngIf="entry.value.disable && mode !== 'user'" [ngModel]="true">
+            {{entry.value.entity.userProfile?.realName === null || entry.value.entity.userProfile?.realName === ''
+            ?
+            entry.value.entity.username : entry.value.entity.userProfile?.realName}}</label>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card [nzTitle]="'团队列表'" [nzSize]="'small'" class="data-list">
+        <div *ngFor="let entry of groupItemMap | keyvalue">
+          <label nz-checkbox [(ngModel)]="entry.value.checked" [nzDisabled]="mode === 'group'"
+            (ngModelChange)="groupChange()"
+            *ngIf="entry.value.entity.status === disable"><s>{{entry.value.entity.name}}</s></label>
+          <label nz-checkbox [(ngModel)]="entry.value.checked" [nzDisabled]="mode === 'group'"
+            (ngModelChange)="groupChange()"
+            *ngIf="entry.value.entity.status === enable">{{entry.value.entity.name}}</label>
+        </div>
+        <div *ngFor="let entry of groupItemMap | keyvalue">
+          <label nz-checkbox [nzDisabled]="true"
+            *ngIf="entry.value.disable && mode !== 'group' && entry.value.entity.status === disable"
+            [ngModel]="true"><s>{{entry.value.entity.name}}</s></label>
+          <label nz-checkbox [nzDisabled]="true"
+            *ngIf="entry.value.disable && mode !== 'group' && entry.value.entity.status === enable"
+            [ngModel]="true">{{entry.value.entity.name}}</label>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card [nzTitle]="'角色列表'" [nzSize]="'small'" class="data-list">
+        <div *ngFor="let entry of roleItemMap | keyvalue">
+          <label nz-checkbox [(ngModel)]="entry.value.checked" [nzDisabled]="mode === 'role'"
+            (ngModelChange)="roleChange()"
+            *ngIf="entry.value.entity.status === disable"><s>{{entry.value.entity.authority}}</s></label>
+          <label nz-checkbox [(ngModel)]="entry.value.checked" [nzDisabled]="mode === 'role'"
+            (ngModelChange)="roleChange()"
+            *ngIf="entry.value.entity.status === enable">{{entry.value.entity.authority}}</label>
+        </div>
+        <div *ngFor="let entry of roleItemMap | keyvalue">
+          <label nz-checkbox [nzDisabled]="true"
+            *ngIf="entry.value.disable && mode !== 'role' && entry.value.entity.status === disable"
+            [ngModel]="true"><s>{{entry.value.entity.authority}}</s></label>
+          <label nz-checkbox [nzDisabled]="true"
+            *ngIf="entry.value.disable && mode !== 'role' && entry.value.entity.status === enable"
+            [ngModel]="true">{{entry.value.entity.authority}}</label>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card [nzTitle]="'功能列表'" [nzSize]="'small'" class="data-list">
+        <div style="width: 600px; overflow-x: hidden;">
+          <div *ngFor="let f of functionItemList">
+            <label nz-checkbox [nzDisabled]="true" [ngModel]="true" [title]="f.remark">{{f.type}} -
+              {{f.value}}</label>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+</div>

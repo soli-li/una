@@ -1,0 +1,76 @@
+{
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": [
+    "!**/*",
+    "**/nz.module.ts"
+  ],
+  "overrides": [
+    {
+      "env": {
+        "browser": true
+      },
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "projects/basic/tsconfig.app.json",
+          "projects/basic/tsconfig.spec.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "no-console": "error",
+        "strict": "error",
+        "no-debugger": "error",
+        "camelcase": "error",
+        "eqeqeq": "error",
+        "arrow-parens": "error",
+        "no-use-before-define": "error",
+        "no-mixed-spaces-and-tabs": "error",
+        "curly": "error",
+        "prefer-const": "error",
+        "new-parens": "error",
+        "default-case": "error",
+        "no-unused-vars": [
+          "error",
+          {
+            "args": "none"
+          }
+        ],
+        "indent": [
+          "error",
+          2,
+          {
+            "SwitchCase": 1
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}

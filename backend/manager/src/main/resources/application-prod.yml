@@ -1,0 +1,13 @@
+server:
+  port: 12101
+
+spring:
+  datasource:
+    platform: 
+    url: 
+    username: 
+    password: 
+    driverClassName: 
+
+logging:
+  config: classpath:logback.xml

@@ -1,0 +1,45 @@
+.user-info {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  .avatar {
+    cursor: pointer;
+    margin: 10px 20px;
+  }
+  .avatar-mini {
+    cursor: pointer;
+    margin: auto;
+  }
+  .avatar > img,
+  .avatar-mini > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .avatar > i,
+  .avatar-mini > i {
+    font-size: 40px;
+  }
+  .real {
+    cursor: pointer;
+  }
+}
+
+.menu {
+  width: 210px;
+  margin: 0px auto;
+  overflow: scroll;
+  height: calc(100% - 60px);
+}
+.menu::-webkit-scrollbar {
+  display: none;
+}
+.menu-mini {
+  width: 40px;
+  margin: 0px auto;
+  overflow: scroll;
+  height: calc(100% - 60px);
+}
+.menu-mini::-webkit-scrollbar {
+  display: none;
+}

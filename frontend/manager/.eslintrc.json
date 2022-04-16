@@ -1,0 +1,12 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@angular-eslint/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  }
+}

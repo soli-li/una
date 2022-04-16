@@ -1,0 +1,42 @@
+<div class="relation">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="0">
+          <nz-form-label [nzXs]="3" [nzFor]="'companyId'">公司</nz-form-label>
+          <nz-form-control [nzXs]="9">
+            <nz-select [formControlName]="'companyId'" [attr.id]="'companyId'" (ngModelChange)="companyChange($event)">
+              <nz-option *ngFor="let company of companies" [nzValue]="company.id" [nzLabel]="company.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div nz-row>
+    <div nz-col [nzXs]="21" [nzPush]="3">
+      <nz-table #basicTable [nzData]="roleSet" class="search-result-list" [nzSize]="'small'" [nzLoading]="loading"
+        [nzBordered]="true">
+        <thead>
+          <tr>
+            <th></th>
+            <th>公司</th>
+            <th nzColumnKey="authority" [nzSortFn]="true" [nzSortOrder]="'ascend'">角色名</th>
+            <th>状态</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td [nzChecked]="checkedSet.has(data.id)" (nzCheckedChange)="relationChange(data.id, $event)"></td>
+            <td>{{data.company?.name}}</td>
+            <td>{{data.authority}}</td>
+            <td>{{utils.getValueFormMap(edMap, data.status)}}</td>
+            <td>{{data.remark}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+  </div>
+</div>

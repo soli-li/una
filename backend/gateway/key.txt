@@ -1,0 +1,4 @@
+keytool -genkey -alias una -keyalg RSA -sigalg SHA512withRSA -keysize 2048 -storetype PKCS12 -keystore C:\soli\oneDrive\projects\una\portal\backend\src\main\resources\keystore_RSA -validity 36500 -keypass una_key -storepass una_key -dname "CN=localhost, OU=soli, O=soli, L=gz, ST=gd, C=cn"
+
+keytool -genkey -alias una -keyalg EC -sigalg SHA512withECDSA -keysize 571 -storetype PKCS12 -keystore C:\soli\oneDrive\projects\una\portal\backend\src\main\resources\keystore_EC -validity 36500 -keypass una_key -storepass una_key -dname "CN=localhost, OU=soli, O=soli, L=gz, ST=gd, C=cn"
+

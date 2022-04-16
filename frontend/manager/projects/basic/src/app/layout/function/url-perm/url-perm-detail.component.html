@@ -1,0 +1,44 @@
+<div class="detail">
+  <form nz-form [formGroup]="formGroup">
+    <nz-form-item [nzGutter]="24">
+      <nz-form-label [nzXs]="3" [nzFor]="'name'">名字</nz-form-label>
+      <nz-form-control [nzXs]="9">
+        <input nz-input placeholder="" [formControlName]="'name'" [attr.id]="'name'" />
+      </nz-form-control>
+      <nz-form-label [nzXs]="3" [nzFor]="'uri'">地址</nz-form-label>
+      <nz-form-control [nzXs]="9">
+        <input nz-input placeholder="" [formControlName]="'uri'" [attr.id]="'uri'" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item [nzGutter]="24">
+      <nz-form-label [nzXs]="3" [nzFor]="'permissionsId'">权限</nz-form-label>
+      <nz-form-control [nzXs]="9">
+        <nz-select [formControlName]="'permissionsId'" [attr.id]="'permissionsId'">
+          <nz-option [nzValue]="''" [nzLabel]="''"></nz-option>
+          <nz-option *ngFor="let p of permissions" [nzValue]="p.id" [nzLabel]="p.name"></nz-option>
+        </nz-select>
+      </nz-form-control>
+      <nz-form-label [nzXs]="3" [nzFor]="'sort'">排序</nz-form-label>
+      <nz-form-control [nzXs]="9">
+        <nz-input-number [formControlName]="'sort'" [attr.id]="'sort'"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item [nzGutter]="24">
+      <nz-form-label [nzXs]="3" [nzFor]="'status'">状态</nz-form-label>
+      <nz-form-control [nzXs]="9">
+        <nz-select [formControlName]="'status'" [attr.id]="'status'">
+          <nz-option *ngFor="let map of edMap | keyvalue" [nzValue]="map.key" [nzLabel]="map.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item [nzGutter]="24">
+      <nz-form-label [nzXs]="3" [nzFor]="'remark'">备注</nz-form-label>
+      <nz-form-control [nzXs]="21">
+        <textarea rows="4" nz-input [formControlName]="'remark'" [attr.id]="'remark'"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

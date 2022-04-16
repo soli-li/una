@@ -1,0 +1,26 @@
+<div class="relation">
+  <div nz-row>
+    <div nz-col [nzXs]="21" [nzPush]="3">
+      <nz-table #basicTable [nzData]="permissioinsSet" class="search-result-list" [nzSize]="'small'"
+        [nzLoading]="loading" [nzBordered]="true">
+        <thead>
+          <tr>
+            <th></th>
+            <th nzColumnKey="name" [nzSortFn]="true" [nzSortOrder]="'ascend'">权限</th>
+            <th>状态</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td [nzChecked]="checkedSet.has(data.id)" (nzCheckedChange)="relationChange(data.id, $event)"></td>
+            <td>{{data.name}}</td>
+            <td>{{utils.getValueFormMap(edMap, data.status)}}</td>
+            <td>{{data.remark}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+  </div>
+</div>

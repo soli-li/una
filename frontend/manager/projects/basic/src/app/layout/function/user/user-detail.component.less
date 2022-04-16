@@ -1,0 +1,47 @@
+.user-detail {
+  width: 100%;
+  min-width: 600px;
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    img {
+      max-width: 170px;
+      max-height: 200px;
+    }
+    .avatar-uploader {
+      width: 170px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  // .avatar:hover::after {
+  //   content: "修改头像";
+  //   white-space: pre;
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   top: 0;
+  //   bottom: 0;
+  //   color: rgba(238, 238, 238, 1);
+  //   background: rgba(0, 0, 0, 0.3);
+  //   font-family: FontAwesome;
+  //   font-size: 8px;
+  //   font-style: normal;
+  //   cursor: pointer;
+  //   text-align: center;
+  //   height: 20px;
+  // }
+  .avatar-uploader {
+    width: 104px;
+  }
+}
+
+::ng-deep .ant-upload.ant-upload-select-picture-card {
+  margin-right: 0px;
+  margin-bottom: 0px;
+}

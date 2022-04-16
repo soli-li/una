@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="zh-Hans" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="3366105758977505054" datatype="html">
+        <source>请输入用户名!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/basic/src/app/layout/login/login.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">&apos;用户名&apos;错误提示</note>
+      </trans-unit>
+      <trans-unit id="3049281848652282767" datatype="html">
+        <source>用户名</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/basic/src/app/layout/login/login.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">&apos;用户名输入框提示&apos;</note>
+      </trans-unit>
+      <trans-unit id="7528727697676057624" datatype="html">
+        <source>请输入密码!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/basic/src/app/layout/login/login.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <note priority="1" from="description">&apos;密码&apos;错误提示</note>
+      </trans-unit>
+      <trans-unit id="6971624281171557374" datatype="html">
+        <source>密码</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/basic/src/app/layout/login/login.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">&apos;密码输入框提示&apos;</note>
+      </trans-unit>
+      <trans-unit id="5562241546181962559" datatype="html">
+        <source>记住我</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/basic/src/app/layout/login/login.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <note priority="1" from="description">&apos;记住我&apos;</note>
+      </trans-unit>
+      <trans-unit id="8888823293232517860" datatype="html">
+        <source>忘记密码</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/basic/src/app/layout/login/login.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="description">&apos;忘记密码&apos;</note>
+      </trans-unit>
+      <trans-unit id="4161378947924066637" datatype="html">
+        <source>登陆</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/basic/src/app/layout/login/login.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">&apos;登陆&apos;</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

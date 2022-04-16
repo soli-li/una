@@ -1,0 +1,51 @@
+<div class="">
+  <nz-table #basicTable [nzData]="dataSet" class="search-result-list" [nzFrontPagination]="false" [nzSize]="'small'"
+    [nzLoading]="loading" [nzTitle]="tableTitle" [nzBordered]="true" (nzQueryParams)="onQueryParamsChange()">
+    <thead>
+      <tr>
+        <th>菜单名</th>
+        <th>icon</th>
+        <th>排序</th>
+        <th>前端地址</th>
+        <th>权限</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of basicTable.data">
+        <ng-container *ngFor="let item of mapOfExpandedData[data.id]">
+          <tr *ngIf="(item.parentMenu && item.parentMenu.expand) || !item.parentMenu">
+            <td [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.childrenMenuSet" [(nzExpand)]="item.expand"
+              (nzExpandChange)="collapse(mapOfExpandedData[data.id], item, $event)">
+              {{ item.name }}
+            </td>
+            <td><i nz-icon [nzTheme]="utils.splitIconName(item.icon).theme"
+                [nzType]="utils.splitIconName(item.icon).type" *ngIf="item.icon"></i></td>
+            <td>{{item.sort}}</td>
+            <td>{{item.frontEndUri}}</td>
+            <td>{{item.permissions?.name}}</td>
+            <td>{{utils.getValueFormMap(edMap, item.status)}}</td>
+            <td>
+              <a (click)="openDetail(item)">详情</a>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal [nzWidth]="detailWidth" [(nzVisible)]="detailVisible" nzTitle="菜单详情" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <app-una-menu-detail #detailModal [menu]="selectedMenu" [menus]="dataSet"></app-una-menu-detail>
+  </ng-container>
+</nz-modal>
+
+<ng-template #tableTitle>
+  <div class="table-title">
+    <div></div>
+    <div><button nz-button [nzType]="'primary'" (click)="add()">增加菜单</button></div>
+  </div>
+</ng-template>

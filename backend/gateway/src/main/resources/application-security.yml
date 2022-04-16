@@ -1,0 +1,26 @@
+app:
+  security:
+    formLogin:
+      url: /login
+      usernameParameter: username
+      passwordParameter: password
+      captchaParameter: captcha
+    logout:
+      url: /logout
+    auth-header: x-auth-token
+    uri:
+      ignore: /user/resetCredentials,/captcha/gen
+      block: /user/updateForLogin, /system-sharing/**, /password/**, /actuator/**
+spring:
+  security:
+    user:
+      password: empty
+      
+system-config:
+  security:
+    session:
+      maximumSessions: 1 # 设置0，不限制同一账号登录数
+      # 如果maximumSessions设置大于0，此配置生效
+      # 当登录session数已经大于等于maximumSessions时，有以下逻辑
+      # 为false时，会踢掉最早登录的session，为true时，此次登录失败
+      maxSessionsPreventsLogin: true 

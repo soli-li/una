@@ -1,0 +1,22 @@
+<nz-layout class="topLayout">
+  <nz-sider [nzCollapsible]="true" [hidden]="leftWidth &lt;= 0" [nzWidth]="leftWidth"
+    [nzCollapsedWidth]="collapsedWidth" (nzCollapsedChange)="isLeftCollapsed = $event" [nzCollapsed]="isLeftCollapsed">
+    <app-una-left-side [collapsed]="isLeftCollapsed"></app-una-left-side>
+  </nz-sider>
+  <nz-layout>
+    <nz-header [ngStyle]="{ height: headerHeight + 'px' }" [hidden]="headerHeight &lt;= 0">
+      <app-una-header></app-una-header>
+    </nz-header>
+    <nz-content [ngStyle]="{ overflow: mainScroll }">
+      <app-una-content></app-una-content>
+    </nz-content>
+    <nz-footer [ngStyle]="{ height: footerHeight + 'px' }" [hidden]="footerHeight &lt;= 0">
+      <app-una-footer></app-una-footer>
+    </nz-footer>
+  </nz-layout>
+  <nz-sider [nzCollapsible]="true" [hidden]="rightWidth &lt;= 0" [nzWidth]="rightWidth"
+    [nzCollapsedWidth]="collapsedWidth" (nzCollapsedChange)="isRightCollapsed = $event" [nzCollapsed]="isRightCollapsed"
+    [nzReverseArrow]="true">
+    <app-una-right-side [collapsed]="isRightCollapsed"></app-una-right-side>
+  </nz-sider>
+</nz-layout>

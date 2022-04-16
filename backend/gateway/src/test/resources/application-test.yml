@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+    nacos:
+      config:
+        enabled: false 
+        refresh-enabled: false
+      discovery:
+        enabled: false 
+        instance-enabled: false
+
+logging:
+  config: classpath:logback-test.xml
+
+eureka:
+  client:
+    enabled: false

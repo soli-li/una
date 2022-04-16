@@ -1,0 +1,106 @@
+<div class="detail">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="2" [nzFor]="'label'">名称</nz-form-label>
+          <nz-form-control [nzXs]="22" nzErrorTip="请输入名称!">
+            <input nz-input placeholder="" [formControlName]="'label'" [attr.id]="'label'" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="2" [nzFor]="'description'">描述</nz-form-label>
+          <nz-form-control [nzXs]="22">
+            <textarea rows="12" nz-input [formControlName]="'description'" [attr.id]="'description'"
+              [readonly]="readonly"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzFor]="'letters'">包含字母</nz-form-label>
+          <nz-form-control [nzXs]="12">
+            <nz-switch [formControlName]="'letters'" [attr.id]="'letters'" [nzDisabled]="readonly"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzFor]="'caseSensitive'">区分大小写</nz-form-label>
+          <nz-form-control [nzXs]="12">
+            <nz-switch [formControlName]="'caseSensitive'" [attr.id]="'caseSensitive'" [nzDisabled]="readonly">
+            </nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzFor]="'digitals'">包含数字</nz-form-label>
+          <nz-form-control [nzXs]="12">
+            <nz-switch [formControlName]="'digitals'" [attr.id]="'digitals'" [nzDisabled]="readonly"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzFor]="'nonAlphanumeric'">包含符号</nz-form-label>
+          <nz-form-control [nzXs]="12">
+            <nz-switch [formControlName]="'nonAlphanumeric'" [attr.id]="'nonAlphanumeric'" [nzDisabled]="readonly">
+            </nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzFor]="'length'">最小长度</nz-form-label>
+          <nz-form-control [nzXs]="6">
+            <nz-input-number [formControlName]="'length'" style="width: 60px;" [nzMin]="0" [attr.id]="'length'"
+              [nzDisabled]="readonly">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzOffset]="1" [nzFor]="'maximumAge'">有效期(天)</nz-form-label>
+          <nz-form-control [nzXs]="12">
+            <nz-input-number [formControlName]="'maximumAge'" style="width: 60px;" [nzMin]="0" [attr.id]="'maximumAge'"
+              [nzDisabled]="readonly">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzOffset]="1" [nzFor]="'repeatCount'">密码重复次数</nz-form-label>
+          <nz-form-control [nzXs]="12">
+            <nz-input-number [formControlName]="'repeatCount'" style="width: 60px;" [nzMin]="0"
+              [attr.id]="'repeatCount'" [nzDisabled]="readonly">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="6">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="12" [nzFor]="'triesCount'">试错次数</nz-form-label>
+          <nz-form-control [nzXs]="12">
+            <nz-input-number [formControlName]="'triesCount'" style="width: 60px;" [nzMin]="0" [attr.id]="'triesCount'"
+              [nzDisabled]="readonly">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>

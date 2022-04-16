@@ -1,0 +1,115 @@
+<div class="detail">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'parentId'">父目录</nz-form-label>
+          <nz-form-control [nzXs]="18" [nzErrorTip]="combineTpl">
+            <nz-tree-select [nzNodes]="parent" [nzDefaultExpandAll]="true" [formControlName]="'parentId'"
+              [attr.id]="'parentId'">
+              <ng-template #nzTreeTemplate let-node>
+                <span class="ant-tree-node-content-wrapper">
+                  <span>
+                    <i nz-icon [nzType]="utils.splitIconName(node.icon).type"
+                      [theme]="utils.splitIconName(node.icon).theme"></i>&nbsp;{{ node.title }}
+                  </span>
+                </span>
+              </ng-template>
+            </nz-tree-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'name'">菜单名</nz-form-label>
+          <nz-form-control [nzXs]="18" [nzErrorTip]="combineTpl">
+            <input nz-input placeholder="" [formControlName]="'name'" [attr.id]="'name'" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'icon'">icon</nz-form-label>
+          <nz-form-control [nzXs]="189">
+            <nz-select [formControlName]="'icon'" [attr.id]="'icon'" [nzCustomTemplate]="iconTemplate"
+              (ngModelChange)="changeIcon($event)">
+              <nz-option [nzValue]="''" [nzLabel]="''"></nz-option>
+              <nz-option nzCustomContent *ngFor="let i of icons" [nzValue]="i.name" [nzLabel]="i.name">
+                <i nz-icon [nzType]="i.type" [nzTheme]="i.theme"></i>&nbsp;{{i.type}}
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'sort'">排序</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <nz-input-number [formControlName]="'sort'" [attr.id]="'sort'"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row style="height: 80px;">
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'frontEndUri'">前端地址</nz-form-label>
+          <nz-form-control [nzXs]="18" [nzErrorTip]="combineTpl">
+            <input nz-input placeholder="" [formControlName]="'frontEndUri'" [attr.id]="'frontEndUri'" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'permissionsId'">权限</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <nz-select [formControlName]="'permissionsId'" [attr.id]="'permissionsId'">
+              <nz-option [nzValue]="''" [nzLabel]="''"></nz-option>
+              <nz-option *ngFor="let p of permissions" [nzValue]="p.id" [nzLabel]="p.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'status'">状态</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <nz-select [formControlName]="'status'" [attr.id]="'status'">
+              <nz-option *ngFor="let map of edMap | keyvalue" [nzValue]="map.key" [nzLabel]="map.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="3" [nzFor]="'remark'">备注</nz-form-label>
+          <nz-form-control [nzXs]="21">
+            <textarea rows="4" nz-input [formControlName]="'remark'" [attr.id]="'remark'"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #iconTemplate>
+  <i nz-icon [nzType]="utils.splitIconName(currentIcon).type"
+    [nzTheme]="utils.splitIconName(currentIcon).theme"></i>&nbsp;{{utils.splitIconName(currentIcon).type}}
+</ng-template>
+
+<ng-template #combineTpl let-control>
+  <ng-container *ngIf="control.hasError('exist')">该名称已经存在</ng-container>
+  <ng-container *ngIf="control.hasError('required')">请输入名称!</ng-container>
+  <ng-container *ngIf="control.hasError('cycle')">不能选该父菜单，会导致菜单循环!</ng-container>
+</ng-template>

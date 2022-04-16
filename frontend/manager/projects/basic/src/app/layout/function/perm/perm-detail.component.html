@@ -1,0 +1,45 @@
+<div class="detail">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="3" [nzFor]="'id'">ID</nz-form-label>
+          <nz-form-control [nzXs]="21" *ngIf="mode === 'update'">
+            <nz-form-text>{{perm?.id}}</nz-form-text>
+          </nz-form-control>
+          <nz-form-control [nzXs]="21" *ngIf="mode === 'add'">
+            <input nz-input placeholder="" [formControlName]="'id'" [attr.id]="'id'" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'name'">权限</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <input nz-input placeholder="" [formControlName]="'name'" [attr.id]="'name'" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'status'">状态</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <nz-select [formControlName]="'status'" [attr.id]="'status'">
+              <nz-option *ngFor="let map of edMap | keyvalue" [nzValue]="map.key" [nzLabel]="map.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <nz-form-item [nzGutter]="24">
+      <nz-form-label [nzXs]="3" [nzFor]="'remark'">备注</nz-form-label>
+      <nz-form-control [nzXs]="21">
+        <textarea rows="4" nz-input [formControlName]="'remark'" [attr.id]="'remark'"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

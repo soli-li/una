@@ -1,0 +1,56 @@
+<div class="detail">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row *ngIf="mode === 'add-manager'">
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="3" [nzFor]="'companyId'">公司</nz-form-label>
+          <nz-form-control [nzXs]="9">
+            <nz-select [formControlName]="'companyId'" [attr.id]="'companyId'" (ngModelChange)="changeCompany()">
+              <nz-option *ngFor="let company of companies" [nzValue]="company.id" [nzLabel]="company.name">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row style="height: 80px;">
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'authority'">角色</nz-form-label>
+          <nz-form-control [nzXs]="18" *ngIf="mode === 'add' || mode === 'add-manager'" [nzErrorTip]="combineTpl">
+            <input nz-input placeholder="" [formControlName]="'authority'" [attr.id]="'authority'" />
+          </nz-form-control>
+          <nz-form-control [nzXs]="18" *ngIf="mode !== 'add' && mode !== 'add-manager'">
+            <nz-form-text>{{role?.authority}}</nz-form-text>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzXs]="12">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="6" [nzFor]="'status'">状态</nz-form-label>
+          <nz-form-control [nzXs]="18">
+            <nz-select [formControlName]="'status'" [attr.id]="'status'">
+              <nz-option *ngFor="let map of edMap | keyvalue" [nzValue]="map.key" [nzLabel]="map.value"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col [nzXs]="24">
+        <nz-form-item [nzGutter]="12">
+          <nz-form-label [nzXs]="3" [nzFor]="'remark'">备注</nz-form-label>
+          <nz-form-control [nzXs]="21">
+            <textarea rows="4" nz-input [formControlName]="'remark'" [attr.id]="'remark'"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #combineTpl let-control>
+  <ng-container *ngIf="control.hasError('exist')">该名称已经存在</ng-container>
+  <ng-container *ngIf="control.hasError('required')">请输入名称!</ng-container>
+</ng-template>

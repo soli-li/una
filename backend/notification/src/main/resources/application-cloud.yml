@@ -1,0 +1,6 @@
+# eureka:
+#   instance:
+#     preferIpAddress: true
+#   client:
+#     serviceUrl:
+#       defaultZone: http://localhost:12001/eureka  ## 注册到 eureka 

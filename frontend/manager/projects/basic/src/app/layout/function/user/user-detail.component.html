@@ -1,0 +1,116 @@
+<div class="user-detail">
+  <div nz-row [nzGutter]="24">
+    <div nz-col nzXs="6" class="avatar" style="display: flex; align-items: center; justify-content: center;">
+      <nz-upload class="avatar-uploader" [nzCustomRequest]="upload" nzName="avatar" nzListType="picture-card"
+        [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
+        <ng-container *ngIf="!avatar">
+          <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+          <div class="ant-upload-text">Upload</div>
+        </ng-container>
+        <img [src]="avatar" *ngIf="avatar" />
+      </nz-upload>
+    </div>
+    <div nz-col nzXs="18">
+      <form nz-form [formGroup]="formGroup">
+        <div nz-row style="height: 80px;">
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'companyId'">公司名</nz-form-label>
+              <nz-form-control [nzXs]="16" *ngIf="mode !== 'add-manager'">
+                <nz-form-text>{{user?.company?.name}}</nz-form-text>
+              </nz-form-control>
+              <nz-form-control [nzXs]="16" *ngIf="mode === 'add-manager'">
+                <nz-select [formControlName]="'user.companyId'" [attr.id]="'companyId'"
+                  (ngModelChange)="changeCompany($event)">
+                  <nz-option *ngFor="let company of companies" [nzValue]="company.id" [nzLabel]="company.name">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'username'">账号</nz-form-label>
+              <nz-form-control [nzXs]="16" *ngIf="mode === 'user-update' || mode === 'update'">
+                <nz-form-text>{{user?.username}}</nz-form-text>
+              </nz-form-control>
+              <nz-form-control [nzXs]="16" *ngIf="mode === 'add' || mode === 'add-manager'" [nzErrorTip]="combineTpl">
+                <nz-input-group [nzAddOnBefore]="accountPrefix">
+                  <input nz-input #username placeholder="" [formControlName]="'user.username'" [attr.id]="'username'" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'accountExpired'">状态</nz-form-label>
+              <nz-form-control [nzXs]="16">
+                <nz-switch [formControlName]="'user.accountExpired'" [attr.id]="'accountExpired'"
+                  [nzDisabled]="mode === 'user-update'"></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'accountLocked'">锁定</nz-form-label>
+              <nz-form-control [nzXs]="16">
+                <nz-switch [formControlName]="'user.accountLocked'" [attr.id]="'accountLocked'"
+                  [nzDisabled]="mode === 'user-update'"></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'realName'">名字</nz-form-label>
+              <nz-form-control [nzXs]="16">
+                <input nz-input placeholder="" [formControlName]="'realName'" [attr.id]="'realName'" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'phone'">电话</nz-form-label>
+              <nz-form-control [nzXs]="16">
+                <input nz-input placeholder="" [formControlName]="'phone'" [attr.id]="'phone'" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'email'">E-Mail</nz-form-label>
+              <nz-form-control [nzXs]="16">
+                <input nz-input placeholder="" [formControlName]="'email'" [attr.id]="'email'" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="12">
+            <nz-form-item [nzGutter]="12">
+              <nz-form-label [nzXs]="8" [nzFor]="'defaultGroupId'">首选团队</nz-form-label>
+              <nz-form-control [nzXs]="16">
+                <nz-select [formControlName]="'user.defaultGroupId'" [attr.id]="'defaultGroupId'">
+                  <nz-option [nzValue]="''" [nzLabel]="''"></nz-option>
+                  <nz-option *ngFor="let group of groups" [nzValue]="group.id" [nzLabel]="group.name">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #combineTpl let-control>
+  <ng-container *ngIf="control.hasError('exist')">该用户已经存在</ng-container>
+  <ng-container *ngIf="control.hasError('required')">请输入账号!</ng-container>
+</ng-template>

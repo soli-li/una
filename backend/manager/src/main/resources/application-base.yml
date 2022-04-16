@@ -1,0 +1,56 @@
+spring:
+  datasource:
+    platform: 
+    url:
+    username:
+    password:
+  jpa:
+    database-platform: 
+    open-in-view: false # Register OpenEntityManagerInViewInterceptor. Binds a JPA EntityManager to the thread for the entire processing of the request.
+    hibernate:
+      ddl-auto: none
+  pid:
+    file: ${app.home}/application.pid # Location of the PID file to write (if ApplicationPidFileWriter is used).
+    fail-on-write-error: false # Fails if ApplicationPidFileWriter is used but it cannot write the PID file.
+logging:
+  config: classpath:logback.xml
+
+app:
+  home: ./ # 应用根目录
+  encoding: UTF-8
+  timeZoneOffset: "+8" # 时区
+  stdout:
+    printToConsole: false
+  request: 
+    out:
+      uuid: true #是否需要把uuid加入到MDC中
+    head:
+      req-uuid-key: una-internal-head-key # uuid是否已经在请求头中存在，如果存在则使用该头的key，该功能主要适配后端的微服务
+      user-id-key: una-internal-user-id-key
+      company-id-key: una-internal-company-id-key
+      perm-id-key: una-internal-perm-id-key
+  security:
+    auth-header: x-auth-token
+  special-id:
+    not-include-company-id: not-include-company
+    superuser-add-data: superuser-add-data
+
+system-config:
+  new-password:
+    length: 8
+    letters: true
+    digitals: true
+    case-sensitive: true 
+    non-alphanumeric: true
+  user:
+    avatar: # upload/download default configuration for avatar file
+      prefix: system-config.user.avatar
+      filenameLength: 128
+      fileLength: 2097152 # 2 * 1024 * 1024 
+      storeType: file # sftp/ftp/file
+      username:
+      password:
+      folder: ${app.home}/avatar
+      ip: 
+      port: 
+

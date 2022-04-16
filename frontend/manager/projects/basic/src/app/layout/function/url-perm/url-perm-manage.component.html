@@ -1,0 +1,79 @@
+<div class="">
+  <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
+    <nz-form-item [nzGutter]="24">
+      <nz-form-label [nzXs]="2" [nzFor]="'search-name'">名字</nz-form-label>
+      <nz-form-control [nzXs]="6">
+        <input nz-input placeholder="" [formControlName]="'name'" [attr.id]="'search-name'" />
+      </nz-form-control>
+      <nz-form-label [nzXs]="2" [nzFor]="'search-uri'">uri</nz-form-label>
+      <nz-form-control [nzXs]="6">
+        <input nz-input placeholder="" [formControlName]="'uri'" [attr.id]="'search-uri'" />
+      </nz-form-control>
+      <nz-form-label [nzXs]="2" [nzFor]="'search-permissionsId'">权限</nz-form-label>
+      <nz-form-control [nzXs]="6">
+        <input nz-input placeholder="" [formControlName]="'permissionsId'" [attr.id]="'search-permissionsId'" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item [nzGutter]="24">
+      <nz-form-label [nzXs]="2" [nzFor]="'search-status'">状态</nz-form-label>
+      <nz-form-control [nzXs]="6">
+        <nz-select [formControlName]="'status'">
+          <nz-option [nzValue]="''" [nzLabel]="''"></nz-option>
+          <nz-option *ngFor="let map of edMap | keyvalue" [nzValue]="map.key" [nzLabel]="map.value"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div nz-row>
+      <div nz-col [nzSpan]="24" class="search-area">
+        <button nz-button [nzType]="'primary'"
+          (click)="searchCondition = validateForm.value;onQueryParamsChange();">搜索</button>
+        <button nz-button (click)="resetForm()">重置</button>
+        <button nz-button [nzType]="'primary'" (click)="add()">添加</button>
+      </div>
+    </div>
+  </form>
+
+  <nz-table #basicTable [nzData]="dataSet" class="search-result-list" [nzFrontPagination]="false" [nzSize]="'small'"
+    [nzLoading]="loading" [nzTotal]="total" [nzShowPagination]="false" [nzFooter]="paginationTemplate"
+    [nzPageSize]="pageSize" [nzBordered]="true" [nzPageIndex]="pageNumber"
+    (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th nzColumnKey="name" [nzSortFn]="true">名字</th>
+        <th nzColumnKey="uri" [nzSortFn]="true">地址</th>
+        <th nzColumnKey="p.name" [nzSortFn]="true">权限</th>
+        <th nzColumnKey="sort" [nzSortFn]="true" [nzSortOrder]="'ascend'">排序</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.name}}</td>
+        <td>{{data.uri}}</td>
+        <td>{{data.permissions?.name}}</td>
+        <td>{{data.sort}}</td>
+        <td>{{utils.getValueFormMap(edMap, data.status)}}</td>
+        <td>
+          <a (click)="openDetail(data)">详情</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal [nzWidth]="detailWidth" [(nzVisible)]="detailVisible" nzTitle="地址权限详情" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <app-una-url-perm-detail #detailModal [urlPerm]="selectedUrlPerm" [mode]="detailMode"></app-una-url-perm-detail>
+  </ng-container>
+</nz-modal>
+
+<ng-template #paginationTemplate>
+  <nz-pagination [(nzPageIndex)]="pageNumber" [nzTotal]="total" [nzPageSizeOptions]="[5, 10, 20, 30, 40]"
+    [nzPageSize]="pageSize" (nzPageSizeChange)="pageSize = $event;onQueryParamsChange();" [nzHideOnSinglePage]="true"
+    nzShowSizeChanger nzShowQuickJumper>
+  </nz-pagination>
+</ng-template>
