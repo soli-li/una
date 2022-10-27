@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+    nacos:
+      config:
+        enabled: false 
+        refresh-enabled: false
+      discovery:
+        enabled: false 
+        instance-enabled: false
+  running-mode: unit-test
+
+logging:
+  config: classpath:logback.xml
+  
+eureka:
+  client:
+    enabled: false
+    
+app:
+  test:
+    manager:
+      enabled: false 
+      url: http://127.0.0.1:12201

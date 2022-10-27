@@ -1,0 +1,33 @@
+spring:
+  pid:
+    file: ${app.home}/application.pid # Location of the PID file to write (if ApplicationPidFileWriter is used).
+    fail-on-write-error: false # Fails if ApplicationPidFileWriter is used but it cannot write the PID file.
+logging:
+  config: ${log.config.path}
+
+app:
+  home: ./ # 应用根目录
+  encoding: ${una.encoding}
+  timeZoneOffset: ${una.timeZoneOffset} # 时区
+  stdout:
+    printToConsole: ${stdout.printToConsole}
+  request: 
+    out:
+      uuid: ${una.request.out.uuid} #是否需要把uuid加入到MDC中
+    head:
+      req-uuid-key: ${una.request.head.req-uuid-key} # uuid是否已经在请求头中存在，如果存在则使用该头的key，该功能主要适配后端的微服务
+  running-mode: normal
+  session-timeout:
+    user: 7200000 # 2 * 60 * 60 * 1000 
+    short-term: 300000 # 5 * 60 * 1000
+    
+
+server:
+  port: ${port}
+  ssl:
+    enabled: ${ssl.enabled}
+    key-alias: ${ssl.key-alias}
+    key-store: ${ssl.key-store}
+    key-store-password: ${ssl.key-store-password}
+    key-store-type: PKCS12
+    clinet-auth: need

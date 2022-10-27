@@ -1,0 +1,13 @@
+# eureka:
+#   instance:
+#     preferIpAddress: true
+#   client:
+#     serviceUrl:
+#       defaultZone: http://localhost:12001/eureka  ## 注册到 eureka 
+
+app:
+  cloud-provider:
+    sharing-url: https://${app.cloud-provider.sharing-name}
+    notification-url: https://${app.cloud-provider.notification-name}
+    sharing-name: ${una.cloud.sharing-name.service}
+    notification-name: ${una.cloud.notification-name.service}

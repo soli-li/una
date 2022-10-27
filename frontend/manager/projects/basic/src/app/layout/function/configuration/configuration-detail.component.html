@@ -63,17 +63,18 @@
         <nz-form-item [nzGutter]="12">
           <nz-form-label [nzXs]="3" [nzFor]="'confValue'">值配置</nz-form-label>
           <nz-form-control [nzXs]="21">
-            <nz-date-picker [ngModel]="" [attr.id]="'confValue'" *ngIf="valueTypeControl === 'date'" nzMode="date"
-              nzFormat="yyyy-MM-dd">
-            </nz-date-picker>
-            <nz-date-picker [formControlName]="'confValue'" [attr.id]="'confValue'"
-              *ngIf="valueTypeControl === 'datetime'" nzMode="date" nzFormat="yyyy-MM-dd HH:mm:ss" [nzShowTime]="true">
-            </nz-date-picker>
-            <nz-switch [formControlName]="'confValue'" [attr.id]="'confValue'" *ngIf="valueTypeControl === 'boolean'">
+            <nz-switch [formControlName]="'confValueBool'" [attr.id]="'confValue'"
+              *ngIf="valueTypeControl === 'boolean'">
             </nz-switch>
-            <nz-input-number [formControlName]="'confValue'" [attr.id]="'confValue'"
+            <nz-date-picker [formControlName]="'confValueDateTime'" [attr.id]="'confValue'"
+              *ngIf="valueTypeControl === 'datetime'" nzMode="datetime" nzFormat="yyyy-MM-dd HH:mm:ss">
+            </nz-date-picker>
+            <nz-date-picker [formControlName]="'confValueDate'" [attr.id]="'confValue'"
+              *ngIf="valueTypeControl === 'date'" nzMode="datetime" nzFormat="yyyy-MM-dd">
+            </nz-date-picker>
+            <nz-input-number [formControlName]="'confValueNum'" [attr.id]="'confValue'"
               *ngIf="valueTypeControl === 'number'"></nz-input-number>
-            <textarea nz-input rows="4" placeholder="" [formControlName]="'confValue'" [attr.id]="'confValue'"
+            <textarea [formControlName]="'confValueStr'" nz-input rows="4" placeholder="" [attr.id]="'confValue'"
               *ngIf="valueTypeControl === 'string'"></textarea>
           </nz-form-control>
         </nz-form-item>

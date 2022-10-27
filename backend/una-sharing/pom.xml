@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.una</groupId>
+		<artifactId>una-top</artifactId>
+		<version>1.0.1</version>
+	</parent>
+	<artifactId>una-sharing</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>una sharing</name>
+	<description>Sharing Service for Una</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-to-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!--
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+
+		<!-- 
+		<dependency>
+			<groupId>com.taobao.arthas</groupId>
+			<artifactId>arthas-spring-boot-starter</artifactId>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.una</groupId>
+			<artifactId>una-common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-suite-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<una.system.cer-list>[classpath:gateway.pem,classpath:manager.pem,classpath:notification.pem,classpath:sharing.pem]</una.system.cer-list>
+		<ssl.key-alias>una_sharing</ssl.key-alias>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.pem</exclude>
+						<exclude>**/*.p12</exclude>
+						<exclude>**/*.yml</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<profile.active>local</profile.active>
+
+				<una.cloud.discovery.server-add>${una.local.cloud.discovery.server-add}</una.cloud.discovery.server-add>
+				<una.cloud.config.server-add>${una.local.cloud.config.server-add}</una.cloud.config.server-add>
+				<una.cloud.config.file-extension>${una.local.cloud.config.file-extension}</una.cloud.config.file-extension>
+				<una.cloud.config.group>${una.local.cloud.config.group}</una.cloud.config.group>
+				<una.cloud.config.namespace>${una.local.cloud.config.namespace}</una.cloud.config.namespace>
+
+				<una.redis.host>${una.local.redis.host}</una.redis.host>
+				<una.redis.port>${una.local.redis.port}</una.redis.port>
+
+				<log.config.path>./src/test/resources/logback.xml</log.config.path>
+				<port>12301</port>
+				<stdout.printToConsole>true</stdout.printToConsole>
+				<una.system.cer-list.useInsecureTrustManager>false</una.system.cer-list.useInsecureTrustManager>
+				<ssl.enabled>true</ssl.enabled>
+				<ssl.key-store>classpath:keystore_RSA_sharing.p12</ssl.key-store>
+				<ssl.key-store-password>una_pass</ssl.key-store-password>
+			</properties>
+		</profile>
+		<profile>
+			<id>uat</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<profile.active>uat</profile.active>
+
+				<una.cloud.discovery.server-add>${una.uat.cloud.discovery.server-add}</una.cloud.discovery.server-add>
+				<una.cloud.config.server-add>${una.uat.cloud.config.server-add}</una.cloud.config.server-add>
+				<una.cloud.config.file-extension>${una.uat.cloud.config.file-extension}</una.cloud.config.file-extension>
+				<una.cloud.config.group>${una.uat.cloud.config.group}</una.cloud.config.group>
+				<una.cloud.config.namespace>${una.uat.cloud.config.namespace}</una.cloud.config.namespace>
+
+				<una.redis.host>${una.uat.redis.host}</una.redis.host>
+				<una.redis.port>${una.uat.redis.port}</una.redis.port>
+
+				<log.config.path>classpath:logback.xml</log.config.path>
+				<port>12301</port>
+				<stdout.printToConsole>false</stdout.printToConsole>
+				<una.system.cer-list.useInsecureTrustManager>false</una.system.cer-list.useInsecureTrustManager>
+				<ssl.enabled>true</ssl.enabled>
+				<ssl.key-store>classpath:keystore_RSA_sharing.p12</ssl.key-store>
+				<ssl.key-store-password>una_pass</ssl.key-store-password>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<profile.active>prod</profile.active>
+
+				<una.cloud.discovery.server-add>${una.prod.cloud.discovery.server-add}</una.cloud.discovery.server-add>
+				<una.cloud.config.server-add>${una.prod.cloud.config.server-add}</una.cloud.config.server-add>
+				<una.cloud.config.file-extension>${una.prod.cloud.config.file-extension}</una.cloud.config.file-extension>
+				<una.cloud.config.group>${una.prod.cloud.config.group}</una.cloud.config.group>
+				<una.cloud.config.namespace>${una.prod.cloud.config.namespace}</una.cloud.config.namespace>
+
+				<una.redis.host>${una.prod.redis.host}</una.redis.host>
+				<una.redis.port>${una.prod.redis.port}</una.redis.port>
+
+				<log.config.path>classpath:logback.xml</log.config.path>
+				<port>12301</port>
+				<stdout.printToConsole>false</stdout.printToConsole>
+				<una.system.cer-list.useInsecureTrustManager>false</una.system.cer-list.useInsecureTrustManager>
+				<ssl.enabled>true</ssl.enabled>
+				<ssl.key-store>classpath:keystore_RSA_sharing.p12</ssl.key-store>
+				<ssl.key-store-password>una_pass</ssl.key-store-password>
+			</properties>
+		</profile>
+	</profiles>
+</project>

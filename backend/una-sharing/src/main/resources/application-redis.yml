@@ -1,0 +1,7 @@
+spring:
+  redis:
+    host: ${una.redis.host}
+    port: ${una.redis.port}
+    # password: ${una.redis.password}
+    # cluster: 
+    #   nodes: ${una.redis.cluster.nodes}

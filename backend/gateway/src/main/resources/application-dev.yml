@@ -1,5 +1,0 @@
-server:
-  port: 12201
-
-logging:
-  config: ./src/test/resources/logback-test.xml

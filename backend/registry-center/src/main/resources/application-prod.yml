@@ -1,5 +1,0 @@
-server:
-  port: 12001
-
-logging:
-  config: classpath:logback.xml

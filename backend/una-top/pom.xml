@@ -1,0 +1,184 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>pom</packaging>
+	<parent>
+		<groupId>com.soli</groupId>
+		<artifactId>top-pom</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<groupId>com.una</groupId>
+	<artifactId>una-top</artifactId>
+	<version>1.0.1</version>
+	<name>una top</name>
+
+	<properties>
+		<una.encoding>UTF-8</una.encoding>
+		<una.timeZoneOffset>"+8"</una.timeZoneOffset>
+		<una.request.out.uuid>true</una.request.out.uuid>
+		<una.request.head.req-uuid-key>una-internal-head-key</una.request.head.req-uuid-key>
+		<una.request.head.user-id-key>una-internal-user-id-key</una.request.head.user-id-key>
+		<una.request.head.company-id-key>una-internal-company-id-key</una.request.head.company-id-key>
+		<una.request.head.perm-id-key>una-internal-perm-id-key</una.request.head.perm-id-key>
+		<una.security.auth-header>x-auth-token</una.security.auth-header>
+
+		<una.cloud.notification-name.service>system-notification</una.cloud.notification-name.service>
+		<una.cloud.sharing-name.service>system-sharing</una.cloud.sharing-name.service>
+		<una.cloud.manager-name.service>system-manager</una.cloud.manager-name.service>
+		<una.cloud.gateway-name.service>system-gateway</una.cloud.gateway-name.service>
+
+		<una.local.database.url>
+			<![CDATA[jdbc:mysql://127.0.0.1:3306/una?allowMultiQueries=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true ]]>
+		</una.local.database.url>
+		<una.local.database.driverClass>com.mysql.cj.jdbc.Driver</una.local.database.driverClass>
+		<una.local.database.username>soli</una.local.database.username>
+		<una.local.database.password>123456</una.local.database.password>
+
+		<una.uat.database.url>
+			<![CDATA[jdbc:mysql://127.0.0.1:3306/una?allowMultiQueries=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true ]]>
+		</una.uat.database.url>
+		<una.uat.database.driverClass>com.mysql.cj.jdbc.Driver</una.uat.database.driverClass>
+		<una.uat.database.username>soli</una.uat.database.username>
+		<una.uat.database.password>123456</una.uat.database.password>
+
+		<una.prod.database.url>
+			<![CDATA[jdbc:mysql://127.0.0.1:3306/una?allowMultiQueries=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true ]]>
+		</una.prod.database.url>
+		<una.prod.database.driverClass>com.mysql.cj.jdbc.Driver</una.prod.database.driverClass>
+		<una.prod.database.username>soli</una.prod.database.username>
+		<una.prod.database.password>123456</una.prod.database.password>
+
+		<una.local.redis.host>127.0.0.1</una.local.redis.host>
+		<una.local.redis.port>16379</una.local.redis.port>
+		<una.local.redis.password>123456</una.local.redis.password>
+		<una.local.redis.cluster.nodes>192.168.137.120:17001,192.168.137.120:17002,192.168.137.120:17003,192.168.137.120:17004,192.168.137.120:17005,192.168.137.120:17006</una.local.redis.cluster.nodes>
+
+		<una.uat.redis.host>127.0.0.1</una.uat.redis.host>
+		<una.uat.redis.port>16379</una.uat.redis.port>
+		<una.uat.redis.password>123456</una.uat.redis.password>
+		<una.uat.redis.cluster.nodes>192.168.137.120:17001,192.168.137.120:17002,192.168.137.120:17003,192.168.137.120:17004,192.168.137.120:17005,192.168.137.120:17006</una.uat.redis.cluster.nodes>
+
+		<una.prod.redis.host>127.0.0.1</una.prod.redis.host>
+		<una.prod.redis.port>16379</una.prod.redis.port>
+		<una.prod.redis.password>123456</una.prod.redis.password>
+		<una.prod.redis.cluster.nodes>192.168.137.120:17001,192.168.137.120:17002,192.168.137.120:17003,192.168.137.120:17004,192.168.137.120:17005,192.168.137.120:17006</una.prod.redis.cluster.nodes>
+
+		<una.local.cloud.discovery.server-add>127.0.0.1:18848</una.local.cloud.discovery.server-add>
+		<una.local.cloud.config.server-add>127.0.0.1:18848</una.local.cloud.config.server-add>
+		<una.local.cloud.config.file-extension>yaml</una.local.cloud.config.file-extension>
+		<una.local.cloud.config.group>DEFAULT_GROUP</una.local.cloud.config.group>
+		<una.local.cloud.config.namespace></una.local.cloud.config.namespace>
+
+		<una.uat.cloud.discovery.server-add>127.0.0.1:18848</una.uat.cloud.discovery.server-add>
+		<una.uat.cloud.config.server-add>127.0.0.1:18848</una.uat.cloud.config.server-add>
+		<una.uat.cloud.config.file-extension>yaml</una.uat.cloud.config.file-extension>
+		<una.uat.cloud.config.group>DEFAULT_GROUP</una.uat.cloud.config.group>
+		<una.uat.cloud.config.namespace></una.uat.cloud.config.namespace>
+
+		<una.prod.cloud.discovery.server-add>127.0.0.1:18848</una.prod.cloud.discovery.server-add>
+		<una.prod.cloud.config.server-add>127.0.0.1:18848</una.prod.cloud.config.server-add>
+		<una.prod.cloud.config.file-extension>yaml</una.prod.cloud.config.file-extension>
+		<una.prod.cloud.config.group>DEFAULT_GROUP</una.prod.cloud.config.group>
+		<una.prod.cloud.config.namespace></una.prod.cloud.config.namespace>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.una</groupId>
+				<artifactId>una-common</artifactId>
+				<version>1.0.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<excludes>
+					<exclude>*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>application-actuator.yml</include>
+					<include>application-tomcat.yml</include>
+					<include>application-web.yml</include>
+					<include>application-security.yml</include>
+					<include>*keystore*</include>
+					<include>*truststore*</include>
+					<include>*.pem</include>
+					<include>*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>application.yml</include>
+					<include>application-base.yml</include>
+					<include>application-redis.yml</include>
+					<include>application-cloud.yml</include>
+					<include>bootstrap.yml</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<!--
+		<testResources>
+			<testResource>
+				<directory>${basedir}/src/test/resources</directory>
+				<excludes>
+					<exclude>*</exclude>
+				</excludes>
+			</testResource>
+			<testResource>
+				<directory>${basedir}/src/test/resources</directory>
+				<includes>
+					<include>logback.xml</include>
+				</includes>
+			</testResource>
+			<testResource>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>application-actuator.yml</include>
+					<include>application-tomcat.yml</include>
+					<include>application-web.yml</include>
+					<include>application-security.yml</include>
+				</includes>
+			</testResource>
+			<testResource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>application.yml</include>
+					<include>application-base.yml</include>
+					<include>application-cloud.yml</include>
+					<include>bootstrap.yml</include>
+				</includes>
+			</testResource>
+		</testResources>
+-->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>phase id -> check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<consoleOutput>true</consoleOutput>
+					<configLocation>${basedir}/../una-top/miss_javadoc_google_checks.xml</configLocation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

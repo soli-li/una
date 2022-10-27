@@ -1,0 +1,26 @@
+# eureka:
+#   instance:
+#     preferIpAddress: true
+#   client:
+#     serviceUrl:
+#       defaultZone: http://localhost:12001/eureka  ## 注册到 eureka 
+
+spring:
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: ${una.system.cer-list.useInsecureTrustManager}
+          trustedX509Certificates: ${una.system.cer-list}
+      routes:
+        - id: manager-provider-rete
+          uri: 'lb://${app.cloud-provider.manager-name}'
+          predicates: 
+            - Path=/pwPolicy/**,/company/**,/user/**,/group/**,/role/**,/perm/**,/menu/**,/url/**,/conf/**,/test/**
+
+app:
+  cloud-provider:
+    manager-url: https://${app.cloud-provider.manager-name}
+    sharing-url: https://${app.cloud-provider.sharing-name}
+    manager-name: ${una.cloud.manager-name.service}
+    sharing-name: ${una.cloud.sharing-name.service}

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: ${una.cloud.notification-name.service}  # 应用程序名称，后面会在消费者中用到
+  cloud:
+    config: 
+      enabled: true
+    nacos:
+      discovery:
+        enabled: true
+        instance-enabled: true
+        server-addr: ${una.cloud.discovery.server-add}
+        ip: 127.0.0.1
+      config:
+        enabled: true
+        refresh-enabled: true
+        server-addr: ${una.cloud.config.server-add}
+        file-extension: ${una.cloud.config.file-extension}
+        group: ${una.cloud.config.group}
+        namespace: ${una.cloud.config.namespace}
+        enableRemoteSyncConfig: true

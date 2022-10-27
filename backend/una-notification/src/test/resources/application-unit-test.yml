@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    config: 
+      enabled: false
+    nacos:
+      discovery:
+        enabled: false
+        instance-enabled: false
+      config:
+        enabled: false
+        refresh-enabled: false
+        
+logging:
+  config: classpath:logback.xml
+
+app:
+  running-mode: unit-test

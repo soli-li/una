@@ -45,10 +45,14 @@ export class ConfigurationDetailComponent implements OnInit {
     this.formGroup.addControl(`companyId`, new FormControl(this.configuration.companyId));
     this.formGroup.addControl(`name`, new FormControl(this.configuration.name));
     this.formGroup.addControl(`confKey`, new FormControl(this.configuration.confKey));
-    this.formGroup.addControl(`confValue`, new FormControl(this.configuration.confValue));
     this.formGroup.addControl(`valueType`, new FormControl(this.configuration.valueType));
     this.formGroup.addControl(`status`, new FormControl(this.configuration.status));
     this.formGroup.addControl(`remark`, new FormControl(this.configuration.remark));
+    this.formGroup.addControl(`confValueBool`, new FormControl());
+    this.formGroup.addControl(`confValueDateTime`, new FormControl());
+    this.formGroup.addControl(`confValueDate`, new FormControl());
+    this.formGroup.addControl(`confValueNum`, new FormControl());
+    this.formGroup.addControl(`confValueStr`, new FormControl());
 
     if (this.mode === 'add-manager') {
       this.companyService.search({ pageable: false }).subscribe({
@@ -63,20 +67,23 @@ export class ConfigurationDetailComponent implements OnInit {
     this.formGroup.controls['confKey'].addValidators(Validators.required);
     this.formGroup.controls['confKey'].addAsyncValidators(this.existingConfKeyValidator());
     this.valueTypeControl = this.configuration.valueType || 'string';
+    this.changeValueType(this.valueTypeControl, this.configuration?.confValue);
   }
 
-  changeValueType(type: string): void {
-    const currDate = new Date();
-    if (type === 'date') {
-      this.formGroup.controls['confValue'].setValue(currDate);
-    } else if (type === 'datetime') {
-      this.formGroup.controls['confValue'].setValue(currDate);
-    } else if (type === 'number') {
-      this.formGroup.controls['confValue'].setValue(0);
-    } else {
-      this.formGroup.controls['confValue'].setValue('');
-    }
+  changeValueType(type: string, value?: string | undefined): void {
     this.valueTypeControl = type;
+    const currDate = new Date();
+    if (this.valueTypeControl === 'boolean') {
+      this.formGroup.setControl('confValueBool', new FormControl(value === undefined ? true : value));
+    } else if (this.valueTypeControl === 'datetime') {
+      this.formGroup.setControl('confValueDateTime', new FormControl(value === undefined ? currDate : new Date(value)));
+    } else if (this.valueTypeControl === 'date') {
+      this.formGroup.setControl('confValueDate', new FormControl(value === undefined ? currDate : new Date(value)));
+    } else if (this.valueTypeControl === 'number') {
+      this.formGroup.setControl('confValueNum', new FormControl(value === undefined ? 0 : value));
+    } else if (this.valueTypeControl === 'string') {
+      this.formGroup.setControl('confValueStr', new FormControl(value === undefined ? '' : value));
+    }
   }
 
   changeCompany(): void {
@@ -111,12 +118,20 @@ export class ConfigurationDetailComponent implements OnInit {
     }
     const data = { ...this.configuration, ...this.formGroup.value };
     if (this.valueTypeControl === 'boolean') {
-      if (data.confValue === true) {
-        data.confValue = Constants.TRUE;
-      } else {
-        data.confValue = Constants.FALSE;
-      }
+      data.confValue = this.formGroup.controls['confValueBool'].value ? Constants.TRUE : Constants.FALSE;
+    } else if (this.valueTypeControl === 'datetime') {
+      const value = this.formGroup.controls['confValueDateTime'].value;
+      data.confValue = value === null ? null : this.datePige.transform(value, 'yyyy-MM-dd HH:mm:ss');
+    } else if (this.valueTypeControl === 'date') {
+      const value = this.formGroup.controls['confValueDate'].value;
+      data.confValue = value === null ? null : this.datePige.transform(value, 'yyyy-MM-dd');
+    } else if (this.valueTypeControl === 'number') {
+      const value = this.formGroup.controls['confValueNum'].value;
+      data.confValue = value === '' ? -1 : value;
+    } else if (this.valueTypeControl === 'string') {
+      data.confValue = this.formGroup.controls['confValueStr'].value;
     }
+
     return data;
   }
 }

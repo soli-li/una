@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<property name="LOG_PATH" value="${sys:app.home:-.}/logs" />
+	<property name="LOG_PATH_BAK"
+		value="${sys:app.home:-.}/logs/baks" />
+	<property name="BAK_FILE_SUFFIX" value=".gz" />
+	<property name="LOG_PATTERN"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%X{defaultLogMark}] %logger{10} - %msg%n" />
+	<property name="FILE_SIZE" value="100M" />
+	<property name="FILE_NAME" value="una" />
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	<appender name="STDERR"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="ERROR" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="INTERFACE" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="OPERATE" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="RUN" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="STDOUT" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="STDERR" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder"
+		level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	<logger name="com.alibaba" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="org.apache" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="org.reflections" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="org.springframework" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="com.una.system.notification.NotificationApplication" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

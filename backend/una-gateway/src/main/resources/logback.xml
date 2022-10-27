@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<property name="LOG_PATH" value="${sys:app.home:-.}/logs" />
+	<property name="LOG_PATH_BAK"
+		value="${sys:app.home:-.}/logs/baks" />
+	<property name="BAK_FILE_SUFFIX" value=".gz" />
+	<property name="LOG_PATTERN"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%X{defaultLogMark}] %logger{10} - %msg%n" />
+	<property name="FILE_SIZE" value="100M" />
+	<property name="FILE_NAME" value="una" />
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	<appender name="STDERR"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STDOUT_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${FILE_NAME}_STDOUT.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH_BAK}/${FILE_NAME}_STDOUT-%d{yyyy-MM-dd}.log.${BAK_FILE_SUFFIX}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+	<appender name="ERROR_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${FILE_NAME}_ERROR.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH_BAK}/${FILE_NAME}_ERROR-%d{yyyy-MM-dd}.log.${BAK_FILE_SUFFIX}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+	</appender>
+	<appender name="INTERFACE_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${FILE_NAME}_INTERFACE.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH_BAK}/${FILE_NAME}_INTERFACE-%d{yyyy-MM-dd}.log.${BAK_FILE_SUFFIX}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+	<appender name="OPERATE_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${FILE_NAME}_OPERATE.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH_BAK}/${FILE_NAME}_OPERATE-%d{yyyy-MM-dd}.log.${BAK_FILE_SUFFIX}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+	<appender name="RUN_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${FILE_NAME}_RUN.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH_BAK}/${FILE_NAME}_RUN-%d{yyyy-MM-dd}.log.${BAK_FILE_SUFFIX}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<appender name="ASYNC_ERROR"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>-1</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="ERROR_APPENDER" />
+	</appender>
+	<appender name="ASYNC_INTERFACE"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>-1</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="INTERFACE_APPENDER" />
+	</appender>
+	<appender name="ASYNC_OPERATE"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>-1</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="OPERATE_APPENDER" />
+	</appender>
+	<appender name="ASYNC_RUN"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>-1</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="RUN_APPENDER" />
+	</appender>
+	<appender name="ASYNC_STDOUT"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>-1</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="STDOUT_APPENDER" />
+	</appender>
+
+	<logger name="ERROR" additivity="false">
+		<appender-ref ref="ASYNC_ERROR" />
+	</logger>
+	<logger name="INTERFACE" additivity="false">
+		<appender-ref ref="ASYNC_INTERFACE" />
+	</logger>
+	<logger name="OPERATE" additivity="false">
+		<appender-ref ref="ASYNC_OPERATE" />
+	</logger>
+	<logger name="RUN" additivity="false">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="STDOUT" additivity="false">
+		<appender-ref ref="ASYNC_STDOUT" />
+	</logger>
+	<logger name="STDERR" additivity="false">
+		<appender-ref ref="ASYNC_STDOUT" />
+	</logger>
+	
+	<logger name="com.alibaba" additivity="false">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="org.apache" additivity="false">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="org.reflections" additivity="false">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="org.springframework" additivity="false">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="com.una.system.gateway.GatewayApplication" additivity="false">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="org.hibernate" additivity="false">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="ASYNC_STDOUT" />
+	</root>
+</configuration>

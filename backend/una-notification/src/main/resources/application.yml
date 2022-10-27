@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    include: web,tomcat,cloud,actuator,base
+    active: ${profile.active}

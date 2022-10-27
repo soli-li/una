@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    include: web,security,cloud,base
+    active: ${profile.active}
